@@ -26,6 +26,7 @@ function hyGetTags() {
     for (const a in stats)
     {
         var thisText = stats[a].innerText;
+        const atImportStr = '@import_';
         switch (thisText) {
             case undefined:
                 break;
@@ -33,18 +34,18 @@ function hyGetTags() {
                 break;
             case 'Posted:':
                 tags.push(thisText + stats[a].nextElementSibling.title);
-                tags.push('at_import_' + thisText + stats[a].nextElementSibling.innerText);
+                tags.push(atImportStr + thisText + stats[a].nextElementSibling.innerText);
                 break;
             case 'Image Specifications:':
                 break;
             case 'Favorites:':
-                tags.push('at_import_' + thisText + stats[a].nextElementSibling.innerText);
+                tags.push(atImportStr + thisText + stats[a].nextElementSibling.innerText);
                 break;
             case 'Comments:':
-                tags.push('at_import_' + thisText + stats[a].nextSibling.textContent);
+                tags.push(atImportStr + thisText + stats[a].nextSibling.textContent);
                 break;
             case 'Views:':
-                tags.push('at_import_' + thisText + stats[a].nextSibling.textContent);
+                tags.push(atImportStr + thisText + stats[a].nextSibling.textContent);
                 break;
             default:
                 tags.push(thisText + stats[a].nextSibling.textContent);
