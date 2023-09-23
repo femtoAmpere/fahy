@@ -2,6 +2,8 @@
 function hyGetTags() {
     var tags = [];
     tags.push('site:furaffinity');
+    tags.push('import:' + new Date().toISOString());
+    tags.push('importer:fahy');
 
     const pageUrl = window.location.href.endsWith('/') ? window.location.href : window.location.href + '/';
     tags.push('url:' + pageUrl);
@@ -19,6 +21,35 @@ function hyGetTags() {
     tags.push('title:' + submissionInfos.firstElementChild.innerText);
     tags.push('creator:' + submissionInfos.lastElementChild.innerText);
     tags.push('url:https://furaffinity.net/user/' + submissionInfos.lastElementChild.innerText + '/');
+
+    const stats = document.getElementsByClassName('alt1 stats-container')[0].getElementsByTagName('b');
+    for (const a in stats)
+    {
+        var thisText = stats[a].innerText;
+        switch (thisText) {
+            case undefined:
+                break;
+            case 'Submission Information:':
+                break;
+            case 'Posted:':
+                tags.push(thisText + stats[a].nextElementSibling.title);
+                tags.push('at_import_' + thisText + stats[a].nextElementSibling.innerText);
+                break;
+            case 'Image Specifications:':
+                break;
+            case 'Favorites:':
+                tags.push('at_import_' + thisText + stats[a].nextElementSibling.innerText);
+                break;
+            case 'Comments:':
+                tags.push('at_import_' + thisText + stats[a].nextSibling.textContent);
+                break;
+            case 'Views:':
+                tags.push('at_import_' + thisText + stats[a].nextSibling.textContent);
+                break;
+            default:
+                tags.push(thisText + stats[a].nextSibling.textContent);
+        }
+    }
 
     const keywords = document.getElementById('keywords');
     if (keywords) {
@@ -64,5 +95,5 @@ function hyPost() {
 const hyButton = document.createElement("p");
 const insertButton = document.getElementById('page-submission');
 const inserted = insertButton.prepend(hyButton);
-hyButton.innerHTML = '<h2>[ hydrus ]</h2>';
+hyButton.innerHTML = '<h2>[ Send to Hydrus ]</h2>';
 hyButton.addEventListener('click', hyPost, true);
