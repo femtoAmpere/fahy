@@ -20,6 +20,7 @@
       "128": "images/icon-128.png"
     }
   },
+  "host_permissions": ["http://127.0.0.1/*"],
   "permissions": ["scripting", "activeTab"],
   "content_scripts": [
     {
