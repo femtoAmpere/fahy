@@ -96,5 +96,5 @@ function hyPost() {
 const hyButton = document.createElement("p");
 const insertButton = document.getElementById('page-submission');
 const inserted = insertButton.prepend(hyButton);
-hyButton.innerHTML = '<h2>[ Send to Hydrus ]</h2>';
+hyButton.innerHTML = '<h2>[ <a href="javascript:void(0);">Send to Hydrus</a> ]</h2>';
 hyButton.addEventListener('click', hyPost, true);

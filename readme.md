@@ -1,0 +1,1 @@
+Please update your Hydrus importer credentials in `background.js`.
