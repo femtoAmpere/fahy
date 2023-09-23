@@ -80,14 +80,14 @@ function hyPost() {
     }, function (responseText) {
         console.log(responseText);
         
-        hyButton.innerHTML = '<h2>[ ' + responseText + ' ]</h2>';
+        hyButton.innerHTML = '[ ' + responseText + ' ] ';
     });
 
     hyButton.removeEventListener('click', hyPost, true);
 }
 
-const hyButton = document.createElement("p");
-const insertButton = document.getElementById('page-submission');
+const hyButton = document.createElement("span");
+const insertButton = document.getElementsByClassName('cat')[0];
 const inserted = insertButton.prepend(hyButton);
-hyButton.innerHTML = '<h2>[ <a href="javascript:void(0);">Send to Hydrus</a> ]</h2>';
+hyButton.innerHTML = '[ <a href="javascript:void(0);">Send to Hydrus</a> ] ';
 hyButton.addEventListener('click', hyPost, true);
