@@ -92,7 +92,7 @@ function hyPost() {
         data: JSON.stringify({
             url: hyGetUrl(),
             //destination_page_key: 1,
-            destination_page_name: 'furaffinity',
+            destination_page_name: 'FurAffinity.net',
             show_destination_page: false,
             //service_keys_to_additional_tags
             filterable_tags: hyGetTags()
