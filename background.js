@@ -1,6 +1,6 @@
 
 const api = 'http://127.0.0.1:45869'
-const key = '0a508929a717adc08046b6254afbb8c866cd4efc831ba594953abb8053000683';
+const key = 'deadbeef';
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, callback) 
