@@ -22,7 +22,8 @@ function hyGetTags() {
     tags.push('creator:' + submissionInfos.lastElementChild.innerText);
     tags.push('url:https://furaffinity.net/user/' + submissionInfos.lastElementChild.innerText + '/');
 
-    const stats = document.getElementsByClassName('alt1 stats-container')[0].getElementsByTagName('b');
+    const statsContainer = document.getElementsByClassName('alt1 stats-container')[0];
+    const stats = statsContainer.getElementsByTagName('b');
     for (const a in stats)
     {
         var thisText = stats[a].innerText;
@@ -40,9 +41,28 @@ function hyGetTags() {
             case 'Favorites:':
                 tags.push(thisText + stats[a].nextElementSibling.innerText);
                 break;
+            case 'Keywords:':
+                break;
             default:
                 tags.push(thisText + stats[a].nextSibling.textContent);
         }
+    }
+
+    const ratingBadge = statsContainer.lastElementChild;
+    const rating = ratingBadge.firstElementChild.alt;
+    switch (rating)
+    {
+        case 'Adult rating':
+            tags.push('rating:explicit');
+            break;
+        case 'Mature rating':
+            tags.push('rating:questionable');
+            break;
+        case 'General rating':
+            tags.push('rating:safe');
+            break;
+        default:
+            break;
     }
 
     const keywords = document.getElementById('keywords');
