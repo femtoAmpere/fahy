@@ -7,8 +7,8 @@ It adds a small button to the submission title **in classic layout**, saying som
 
 ## Using faHy
 
+- Put your Hydrus importer credentials in `background.js`
 - Install like <https://gitgud.io/prkc/hydrus-companion>
-- Please put your Hydrus importer credentials in `background.js`
 
 ## More Information
 

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Hydrus FurAffinity Classic",
-  "description": "Send tab to Hydrus from FA classic page.",
+  "name": "faHy",
+  "description": "Send FA submission info to Hydrus.",
   "version": "0.2",
   "icons": {
     "16": "images/icon-16.png",
