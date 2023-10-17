@@ -111,7 +111,9 @@ function getUrlsFromTags(tags)
 
 function getComment()
 {
-    return 'todo';
+    const commentElement = document.getElementsByClassName('maintable')[1].getElementsByTagName('tr')[2];
+
+    return commentElement.innerText;
 }
 
 function hyPost() 
@@ -119,13 +121,18 @@ function hyPost()
     const importUrl = getUrl();
     const tags = getTags();
     const urls = getUrlsFromTags(tags);
-    const comment = getComment();
+    const notes = 
+    {
+        'source': window.location.href.endsWith('/') ? window.location.href : window.location.href + '/',
+        'artist description': getComment(),
+    };
+
     chrome.runtime.sendMessage({
         action: 'hydrusAPI',
         importUrl: importUrl,
         tags: tags,
         urls: urls,
-        comment: comment
+        notes: notes
     }, function (responseText) {
         console.log(responseText);
 
