@@ -116,29 +116,12 @@ function getComment()
     return commentElement.innerText;
 }
 
-async function getHash() 
-{
-    const fetchUrl = getUrl();
-    const imageResponse = await fetch(fetchUrl);
-    if (imageResponse.status !== 200) {
-        throw new Error(`Failed to get ${fetchUrl} with status code ${imageResponse.status}`);
-        //return '0';
-    }
-    const image = await imageResponse.arrayBuffer();
-    const hashBuffer = await crypto.subtle.digest('SHA-256', image);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
-}
-
 async function hyPost() 
 {
     hyButton.innerHTML = '[ ' + 'faHy Working' + ' ] ';
     hyButton.removeEventListener('click', hyPost, true);
 
     const importUrl = getUrl();
-    const imageHash = await getHash();
     const tags = getTags();
     const urls = getUrlsFromTags(tags);
     const notes = 
@@ -150,7 +133,6 @@ async function hyPost()
     chrome.runtime.sendMessage({
         action: 'hydrusAPI',
         importUrl: importUrl,
-        imageHash: imageHash,
         tags: tags,
         urls: urls,
         notes: notes

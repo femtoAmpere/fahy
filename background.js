@@ -53,9 +53,25 @@ async function hyAddUrl(importUrl, tags)
   );
 }
 
-async function hyApiMain(importUrl, hash, tags, urls=[], notes={})
+async function getHash(url) {
+  const imageResponse = await fetch(url);
+  if (imageResponse.status !== 200) {
+    throw new Error(`Failed to get ${url} with status code ${imageResponse.status}`);
+    //return '0';
+  }
+  const image = await imageResponse.arrayBuffer();
+  const hashBuffer = await crypto.subtle.digest('SHA-256', image);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
+async function hyApiMain(importUrl, tags, urls=[], notes={})
 {
   const addUrlResponse = await hyAddUrl(importUrl, tags);
+
+  const hash = await getHash(importUrl);
   const associateUrlResponse = await hyAssociateUrl(hash, urls);
   const setNotesResponse = await hySetNotes(hash, notes);
 
@@ -75,7 +91,7 @@ chrome.runtime.onMessage.addListener(
     console.log(sender);
     if (msg.action == 'hydrusAPI')
     {
-      hyApiMain(msg.importUrl, msg.imageHash, msg.tags, msg.urls, msg.notes)
+      hyApiMain(msg.importUrl, msg.tags, msg.urls, msg.notes)
       .then((response) => {
         console.log(response);
         callback(response);

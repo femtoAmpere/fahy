@@ -20,7 +20,7 @@
       "128": "images/icon-128.png"
     }
   },
-  "host_permissions": ["http://127.0.0.1/*"],
+  "host_permissions": ["http://127.0.0.1/*", "https://d.furaffinity.net/art/*"],
   "permissions": ["scripting", "activeTab"],
   "content_scripts": [
     {
