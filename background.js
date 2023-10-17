@@ -8,29 +8,6 @@ const headers =
   'Hydrus-Client-API-Access-Key': key
 };
 
-function wait(delay) {
-  return new Promise((resolve) => setTimeout(resolve, delay));
-}
-
-function hyGetHash(url, n = 4) {
-  return fetch(api + '/add_urls/get_url_files?url=' + url,
-    {
-      method: 'GET',
-      headers: headers
-    })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (result) {
-      if (result.url_file_statuses.length == 0) throw error;
-      return result.url_file_statuses[0].hash;
-    })
-    .catch(function (error) {
-      if (n <= 1) throw error;
-      return wait(4*1000).then(() => hyGetHash(url, n - 1));
-    });
-}
-
 async function hyAssociateUrl(hash, urls)
 {
   return await fetch(api + '/add_urls/associate_url',
@@ -76,10 +53,9 @@ async function hyAddUrl(importUrl, tags)
   );
 }
 
-async function hyApiMain(importUrl, tags, urls=[], notes={})
+async function hyApiMain(importUrl, hash, tags, urls=[], notes={})
 {
   const addUrlResponse = await hyAddUrl(importUrl, tags);
-  const hash = await hyGetHash(importUrl);
   const associateUrlResponse = await hyAssociateUrl(hash, urls);
   const setNotesResponse = await hySetNotes(hash, notes);
 
@@ -93,13 +69,13 @@ async function hyApiMain(importUrl, tags, urls=[], notes={})
 }
 
 chrome.runtime.onMessage.addListener(
-  function (msg, sender, callback) 
+  function (msg, sender, callback)
   {
     console.log(msg);
     console.log(sender);
     if (msg.action == 'hydrusAPI')
     {
-      hyApiMain(msg.importUrl, msg.tags, msg.urls, msg.notes)
+      hyApiMain(msg.importUrl, msg.imageHash, msg.tags, msg.urls, msg.notes)
       .then((response) => {
         console.log(response);
         callback(response);
