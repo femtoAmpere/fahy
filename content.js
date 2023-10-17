@@ -123,10 +123,11 @@ function hyPost()
     const urls = getUrlsFromTags(tags);
     const notes = 
     {
-        'source': window.location.href.endsWith('/') ? window.location.href : window.location.href + '/',
+        //'source': window.location.href.endsWith('/') ? window.location.href : window.location.href + '/',
         'artist description': getComment(),
     };
 
+    hyButton.innerHTML = '[ ' + 'faHy Working' + ' ] ';
     chrome.runtime.sendMessage({
         action: 'hydrusAPI',
         importUrl: importUrl,

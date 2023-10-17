@@ -8,19 +8,27 @@ const headers =
   'Hydrus-Client-API-Access-Key': key
 };
 
-async function hyGetHash(url)
-{
-  const response = await fetch(api + '/add_urls/get_url_files?url=' + url,
+function wait(delay) {
+  return new Promise((resolve) => setTimeout(resolve, delay));
+}
+
+function hyGetHash(url, n = 4) {
+  return fetch(api + '/add_urls/get_url_files?url=' + url,
     {
       method: 'GET',
       headers: headers
-    }
-  );
-
-  const result = await response.json();
-  if (result.url_file_statuses.length == 0) { return 0; }
-
-  return result.url_file_statuses[0].hash;
+    })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (result) {
+      if (result.url_file_statuses.length == 0) throw error;
+      return result.url_file_statuses[0].hash;
+    })
+    .catch(function (error) {
+      if (n <= 1) throw error;
+      return wait(4*1000).then(() => hyGetHash(url, n - 1));
+    });
 }
 
 async function hyAssociateUrl(hash, urls)
