@@ -9,7 +9,7 @@ It adds a small button to the submission title **in classic layout**, saying som
 
 - Put your Hydrus importer credentials in `background.js`
 - Install like <https://gitgud.io/prkc/hydrus-companion>
-- In order to display imported posts you can,
+- In order to display imported urls in the media viewer you can,
   - import `url-classes/fahy.json` with `hydrus main window -> network -> downloader components -> manage url classes -> import -> from json files`
   - or just enable `hydrus main window -> network -> downloaders -> manage downloader and url display -> media viewer urls -> show urls that do not have a matching url class?`
 
