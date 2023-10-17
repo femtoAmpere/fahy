@@ -118,8 +118,8 @@ function getComment()
 
 async function hyPost() 
 {
-    hyButton.innerHTML = '[ ' + 'faHy Working' + ' ] ';
     hyButton.removeEventListener('click', hyPost, true);
+    hyButton.innerHTML = '[ ' + 'faHy Importing' + ' ] ';
 
     const importUrl = getUrl();
     const tags = getTags();
