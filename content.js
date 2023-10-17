@@ -1,5 +1,5 @@
 
-function hyGetTags() {
+function getTags() {
     var tags = [];
     tags.push('site:furaffinity');
     tags.push('import:' + new Date().toISOString());
@@ -9,7 +9,7 @@ function hyGetTags() {
     tags.push('url:' + pageUrl);
     tags.push('id:' + pageUrl.split('/').at(-2));
 
-    const downloadUrl = hyGetUrl();
+    const downloadUrl = getUrl();
     tags.push('url:' + downloadUrl);
 
     const filename = downloadUrl.split(/(\\|\/)/g).pop();
@@ -88,30 +88,49 @@ function hyGetTags() {
     return tags;
 }
 
-function hyGetUrl() {
+function getUrl() {
     const url = document.getElementById('submissionImg').src;
     console.log('url: ' + url);
     return url;
 }
 
-function hyPost() {
+function getUrlsFromTags(tags)
+{
+    var urls = [];
+    for (const tag of tags)
+    {
+        if (tag.toLowerCase().startsWith('url:'))
+        {
+            urls.push(tag.split('url:')[1]);
+        }
+    }
+
+    console.log('urls: ' + urls);
+    return urls;
+}
+
+function getComment()
+{
+    return 'todo';
+}
+
+function hyPost() 
+{
+    const importUrl = getUrl();
+    const tags = getTags();
+    const urls = getUrlsFromTags(tags);
+    const comment = getComment();
     chrome.runtime.sendMessage({
         action: 'hydrusAPI',
-        method: '/add_urls/add_url',
-        data: JSON.stringify({
-            url: hyGetUrl(),
-            //destination_page_key: 1,
-            destination_page_name: 'FurAffinity.net',
-            show_destination_page: false,
-            //service_keys_to_additional_tags
-            filterable_tags: hyGetTags()
-        })
+        importUrl: importUrl,
+        tags: tags,
+        urls: urls,
+        comment: comment
     }, function (responseText) {
         console.log(responseText);
-        
+
         hyButton.innerHTML = '[ ' + responseText + ' ] ';
     });
-
     hyButton.removeEventListener('click', hyPost, true);
 }
 
