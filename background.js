@@ -29,7 +29,8 @@ async function hySetNotes(hash, notes) {
       headers: headers,
       body: JSON.stringify({
         notes: notes,
-        hash: hash
+        hash: hash,
+        merge_cleverly: true
       })
     }
   );

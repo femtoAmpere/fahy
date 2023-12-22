@@ -3,7 +3,7 @@ function getTags() {
     var tags = [];
     tags.push('site:furaffinity');
     tags.push('import:' + new Date().toISOString());
-    tags.push('importer:fahy');
+    tags.push('importer:https://github.com/femtoAmpere/fahy');
 
     const pageUrl = window.location.href.endsWith('/') ? window.location.href : window.location.href + '/';
     tags.push('url:' + pageUrl);
