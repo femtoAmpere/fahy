@@ -149,3 +149,13 @@ const insertButton = document.getElementById('page-submission').getElementsByCla
 const inserted = insertButton.prepend(hyButton);
 hyButton.innerHTML = '[ <a href="javascript:void(0);">Send to Hydrus</a> ] ';
 hyButton.addEventListener('click', hyPost, true);
+document.body.addEventListener('keypress', function (event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === " ") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.body.removeEventListener('keypress', this);
+        hyButton.click();
+    }
+});
