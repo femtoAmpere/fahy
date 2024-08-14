@@ -145,7 +145,7 @@ async function hyPost()
 }
 
 const hyButton = document.createElement("span");
-const insertButton = document.getElementsByClassName('cat')[0];
+const insertButton = document.getElementById('page-submission').getElementsByClassName('maintable')[0].getElementsByClassName('cat')[0];
 const inserted = insertButton.prepend(hyButton);
 hyButton.innerHTML = '[ <a href="javascript:void(0);">Send to Hydrus</a> ] ';
 hyButton.addEventListener('click', hyPost, true);
