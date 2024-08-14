@@ -144,18 +144,20 @@ async function hyPost()
     });
 }
 
+async function hyKeyPress(event)
+{
+    if (event.key === " ") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.body.removeEventListener('keypress', hyKeyPress);
+        hyButton.click();
+    }
+}
+
 const hyButton = document.createElement("span");
 const insertButton = document.getElementById('page-submission').getElementsByClassName('maintable')[0].getElementsByClassName('cat')[0];
 const inserted = insertButton.prepend(hyButton);
 hyButton.innerHTML = '[ <a href="javascript:void(0);">Send to Hydrus</a> ] ';
 hyButton.addEventListener('click', hyPost, true);
-document.body.addEventListener('keypress', function (event) {
-    // If the user presses the "Enter" key on the keyboard
-    if (event.key === " ") {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        // Trigger the button element with a click
-        document.body.removeEventListener('keypress', this);
-        hyButton.click();
-    }
-});
+document.body.addEventListener('keypress', hyKeyPress);
