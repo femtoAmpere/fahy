@@ -120,6 +120,8 @@ function getComment()
 async function hyPost() 
 {
     hyButton.removeEventListener('click', hyPost, true);
+    document.body.removeEventListener('keypress', hyKeyPress);
+    
     hyButton.innerHTML = '[ ' + 'faHy Importing' + ' ] ';
 
     const importUrl = getUrl();
@@ -150,7 +152,6 @@ async function hyKeyPress(event)
         // Cancel the default action, if needed
         event.preventDefault();
         // Trigger the button element with a click
-        document.body.removeEventListener('keypress', hyKeyPress);
         hyButton.click();
     }
 }
